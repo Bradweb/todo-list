@@ -1,10 +1,10 @@
-function TodoItem(title, description, priority) {
+function TodoItem(title, description, priority, dueDate) {
     this.title = title;
     this.description = description;
     this.priority = priority;
-    this.completed = false; // Set initial value to false
+    this.dueDate = dueDate; // Add the dueDate property to the TodoItem object
+    this.completed = false;
   }
   
-  
-  export { TodoItem, markTodoAsComplete };
+  export { TodoItem };
   

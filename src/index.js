@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <h1>Todo List</h1>
     <input type="text" id="todoInput" placeholder="Enter your todo">
     <input type="text" id="todoDescription" placeholder="Enter todo description">
+    <input type="date" id="todoDueDate"> <!-- Use type="date" for the due date -->
     <select id="todoPriority">
       <option value="low">Low</option>
       <option value="medium">Medium</option>
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Get references to the input, button, and list elements
   const todoInput = todoListContainer.querySelector("#todoInput");
   const todoDescription = todoListContainer.querySelector("#todoDescription");
+  const todoDueDate = todoListContainer.querySelector("#todoDueDate"); // Reference to the due date input field
   const todoPriority = todoListContainer.querySelector("#todoPriority");
   const addTodoBtn = todoListContainer.querySelector("#addTodoBtn");
   const todoList = todoListContainer.querySelector("#todoList");
@@ -37,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span>${todo.title}</span>
         <span>${todo.description}</span>
         <span>Priority: ${todo.priority}</span>
+        <span>Due Date: ${todo.dueDate}</span> <!-- Display the due date -->
       `;
 
       const clearButton = document.createElement("button");
@@ -52,23 +55,36 @@ document.addEventListener("DOMContentLoaded", () => {
   function addTodo() {
     const title = todoInput.value.trim();
     const description = todoDescription.value.trim();
+    const dueDate = todoDueDate.value.trim();
     const priority = todoPriority.value;
-
+  
     if (title === "") {
-      alert("Please enter a valid todo.");
+      alert("Please enter a valid todo title.");
       return;
     }
-
-    const newTodo = new TodoItem(title, description, priority);
+  
+    if (description === "") {
+      alert("Please enter a valid todo description.");
+      return;
+    }
+  
+    if (dueDate === "") {
+      alert("Please enter a valid due date.");
+      return;
+    }
+  
+    
+    const newTodo = new TodoItem(title, description, priority, dueDate);
     todos.push(newTodo);
-
+  
     // Add the new todo to the DOM
     addTodoToDOM(newTodo);
-
+  
     todoInput.value = "";
     todoDescription.value = "";
+    todoDueDate.value = "";
   }
-
+  
   // Function to handle todo completion
   function handleTodoCompletion(event) {
     const checkbox = event.target;
@@ -91,6 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <span>${todo.title}</span>
       <span>${todo.description}</span>
       <span>Priority: ${todo.priority}</span>
+      <span>Due Date: ${todo.dueDate}</span>
     `;
 
     const clearButton = document.createElement("button");
