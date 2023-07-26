@@ -1,7 +1,21 @@
 import { TodoItem } from './todos.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-  const todos = [];
+  // Function to save todos to local storage
+  function saveTodosToLocalStorage() {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+
+  // Function to retrieve todos from local storage
+  function getTodosFromLocalStorage() {
+    const storedTodos = localStorage.getItem("todos");
+    return JSON.parse(storedTodos);
+  }
+
+  // Array to store all the todos
+  let todos = getTodosFromLocalStorage() || [];
+
+  // Create the todo list container and its elements
   const todoListContainer = document.createElement("div");
   todoListContainer.innerHTML = `
     <h1>Todo List</h1>
@@ -77,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     todoInput.value = "";
     todoDescription.value = "";
     todoDueDate.value = "";
+    saveTodosToLocalStorage(); // Save the updated todos array to local storage
   }
 
   function handleTodoCompletion(event) {
@@ -88,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (todo) {
       todo.completed = checkbox.checked;
       displayTodos();
+      saveTodosToLocalStorage(); // Save the updated todos array to local storage
     }
   }
 
@@ -113,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const index = todos.indexOf(todo);
     if (index !== -1) {
       todos.splice(index, 1);
+      saveTodosToLocalStorage(); // Save the updated todos array to local storage
     }
     displayTodos();
   }
